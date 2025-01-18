@@ -2,6 +2,8 @@ from object_3d import *
 import pygame as pg
 from camera import *
 from projection import *
+from sys import argv
+from os.path import expanduser
 
 class SoftwareRender:
     def __init__(self):
@@ -16,7 +18,7 @@ class SoftwareRender:
     def create_objects(self):
         self.camera = Camera(self, [0.5, 1, -4])
         self.projection = Projection(self)
-        self.object = self.get_object_from_file('filename.obj')
+        self.object = self.get_object_from_file(expanduser(argv[1]))
 
     def get_object_from_file(self, filename):
         vertex, faces = [], []
