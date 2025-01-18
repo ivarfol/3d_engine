@@ -19,10 +19,10 @@ class SoftwareRender:
         self.camera = Camera(self, [0.5, 1, -4])
         self.projection = Projection(self)
         self.object = self.get_object_from_file(expanduser(argv[1]))
-        self.world_axes = Axes(self)
-        self.world_axes.movement_flag = False
-        self.world_axes.scale(20)
-        self.world_axes.translate([0.0001, 0.0001, 0.0001])
+        #self.world_axes = Axes(self)
+        #self.world_axes.movement_flag = False
+        #self.world_axes.scale(20)
+        #self.world_axes.translate([0.0001, 0.0001, 0.0001])
 
     def get_object_from_file(self, filename):
         vertex, faces = [], []
@@ -37,7 +37,7 @@ class SoftwareRender:
 
     def draw(self):
         self.screen.fill((0, 0, 0))
-        self.world_axes.draw()
+        #self.world_axes.draw()
         self.object.draw()
 
     def run(self):
