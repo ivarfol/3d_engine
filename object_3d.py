@@ -1,5 +1,10 @@
 import pygame as pg
 from matrix_functions import *
+from numba import njit
+
+@njit(fastmath = True)
+def any_func(arr, a, b):
+    return np.any((arr == a) | (arr == b))
 
 class Object3D:
     def __init__(self, render, vertexes, faces):
@@ -20,10 +25,10 @@ class Object3D:
 
         for face in self.faces:
             polygon = vertexes[face]
-            if not np.any((polygon == self.render.H_WIDTH) | (polygon == self.render.H_HEIGHT)):
+            if not any_func(polygon, self.render.H_WIDTH, self.render.H_HEIGHT):
                 pg.draw.polygon(self.render.screen, (255, 255, 255), polygon, 1)
         #for vertex in vertexes:
-        #    if not np.any((vertex == self.render.H_WIDTH) | (vertex == self.render.H_HEIGHT)):
+        #    if not any_func(vertex, self.render.H_WIDTH, self.render.H_HEIGHT):
         #        pg.draw.circle(self.render.screen, (255, 0, 0), vertex, 2)
 
     def translate(self, pos):
