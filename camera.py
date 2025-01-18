@@ -39,6 +39,11 @@ class Camera:
         if key[pg.K_DOWN]:
             self.camera_pitch(self.rotation_speed)
 
+        if key[pg.K_PERIOD]:
+            self.camera_z(-self.rotation_speed)
+        if key[pg.K_COMMA]:
+            self.camera_z(self.rotation_speed)
+
     def camera_yaw(self, angle):
         rotate = rotate_y(angle)
         self.forward = self.forward @ rotate
@@ -47,6 +52,12 @@ class Camera:
 
     def camera_pitch(self, angle):
         rotate = rotate_x(angle)
+        self.forward = self.forward @ rotate
+        self.right = self.right @ rotate
+        self.up = self.up @ rotate
+
+    def camera_z(self, angle):
+        rotate = rotate_z(angle)
         self.forward = self.forward @ rotate
         self.right = self.right @ rotate
         self.up = self.up @ rotate
