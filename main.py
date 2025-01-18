@@ -16,11 +16,9 @@ class SoftwareRender:
     def create_objects(self):
         self.camera = Camera(self, [0.5, 1, -4])
         self.projection = Projection(self)
-        self.object = Object3D(self)
-        self.object.translate([0.2, 0.4, 0.2])
-        self.object.rotate_y(math.pi / 6)
+        self.object = self.get_object_from_file('filename.obj')
 
-    def get_objec_from_file(self, filename):
+    def get_object_from_file(self, filename):
         vertex, faces = [], []
         with open(filename) as f:
             for line in f:

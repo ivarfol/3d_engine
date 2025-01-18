@@ -2,12 +2,10 @@ import pygame as pg
 from matrix_functions import *
 
 class Object3D:
-    def __init__(self, render):
+    def __init__(self, render, vertexes, faces):
         self.render = render
-        self.vertexes = np.array([(0, 0, 0, 1), (0, 1, 0, 1), (1, 1, 0, 1), (1, 0, 0, 1),
-                                  (0, 0, 1, 1), (0, 1, 1, 1), (1, 1, 1, 1), (1, 0, 1, 1)])
-
-        self.faces = np.array([(0, 1, 2, 3), (4, 5, 6, 7), (0, 4, 5, 1), (2, 3, 7, 6), (1, 2, 6, 5), (0, 3, 7, 4)])
+        self.vertexes = np.array([np.array(v) for v in vertexes])
+        self.faces = np.array([np.array(face) for face in faces], dtype="object")
 
     def draw(self):
         self.screen_projection()
@@ -23,10 +21,10 @@ class Object3D:
         for face in self.faces:
             polygon = vertexes[face]
             if not np.any((polygon == self.render.H_WIDTH) | (polygon == self.render.H_HEIGHT)):
-                pg.draw.polygon(self.render.screen, (255, 255, 255), polygon, 3)
-        for vertex in vertexes:
-            if not np.any((vertex == self.render.H_WIDTH) | (vertex == self.render.H_HEIGHT)):
-                pg.draw.circle(self.render.screen, (255, 0, 0), vertex, 6)
+                pg.draw.polygon(self.render.screen, (255, 255, 255), polygon, 1)
+        #for vertex in vertexes:
+        #    if not np.any((vertex == self.render.H_WIDTH) | (vertex == self.render.H_HEIGHT)):
+        #        pg.draw.circle(self.render.screen, (255, 0, 0), vertex, 2)
 
     def translate(self, pos):
         self.vertexes = self.vertexes @ translate(pos)
