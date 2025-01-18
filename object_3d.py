@@ -10,7 +10,10 @@ class Object3D:
     def __init__(self, render, vertexes, faces):
         self.render = render
         self.vertexes = np.array([np.array(v) for v in vertexes])
-        self.faces = np.array([np.array(face) for face in faces], dtype="object")
+        try:
+            self.faces = np.array([np.array(face) for face in faces], dtype="int")
+        except:
+            self.faces = np.array([np.array(face) for face in faces], dtype="object")
 
     def draw(self):
         self.screen_projection()
