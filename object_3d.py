@@ -24,6 +24,7 @@ class Object3D:
 
     def screen_projection(self):
         vertexes = self.vertexes @ self.render.camera.camera_matrix()
+        vertexes[vertexes[:,2] < 0,1]=0
         vertexes = vertexes @ self.render.projection.projection_matrix
         vertexes /= vertexes[:, -1].reshape(-1, 1)
         vertexes[(vertexes > 3) | (vertexes < -3)] = 0
