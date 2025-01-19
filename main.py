@@ -11,9 +11,10 @@ class SoftwareRender:
         self.RES = self.WIDTH, self.HEIGHT = 1600, 900
         self.H_WIDTH, self.H_HEIGHT = self.WIDTH // 2, self.HEIGHT // 2
         self.FPS = 60
-        self.screen = pg.display.set_mode(self.RES)
+        self.screen = pg.display.set_mode(self.RES, pg.RESIZABLE)
         self.clock = pg.time.Clock()
         self.create_objects()
+        self.fullscreen = False
 
     def create_objects(self):
         self.camera = Camera(self, [0.5, 1, -4])
@@ -44,7 +45,17 @@ class SoftwareRender:
         while True:
             self.draw()
             self.camera.control()
-            [exit() for i in pg.event.get() if i.type == pg.QUIT]
+            for event in pg.event.get():
+                if event.type == pg.QUIT:
+                    exit()
+                elif event.type == pg.KEYDOWN and event.key == pg.K_F11:
+                    print("detected", self.fullscreen)
+                    if self.fullscreen:
+                        self.screen = pg.display.set_mode(self.RES, pg.RESIZABLE)
+                        self.fullscreen = False
+                    else:
+                        self.screen = pg.display.set_mode(self.RES, pg.FULLSCREEN)
+                        self.fullscreen = True
             pg.display.set_caption(f'{self.clock.get_fps():.3f}')
             pg.display.flip()
             self.clock.tick(self.FPS)
