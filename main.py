@@ -49,7 +49,6 @@ class SoftwareRender:
                 if event.type == pg.QUIT:
                     exit()
                 elif event.type == pg.KEYDOWN and event.key == pg.K_F11:
-                    print("detected", self.fullscreen)
                     if self.fullscreen:
                         self.screen = pg.display.set_mode(self.RES, pg.RESIZABLE)
                         self.fullscreen = False
