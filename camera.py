@@ -44,29 +44,42 @@ class Camera:
         if key[pg.K_COMMA]:
             self.camera_z(self.rotation_speed)
 
+    def rotate_camera(self, angle, axis):
+        wTc = self.camera_matrix().T
+        cTw = np.linalg.pinv(wTc)
+        if (axis == 'y'):
+            rotate_in_cTw = rotate_y(angle)
+        elif (axis == 'x'):
+            rotate_in_cTw = rotate_x(angle)
+        elif (axis == 'z'):
+            rotate_in_cTw = rotate_z(angle)
+        else:
+            rotate_in_cTw = np.eye(4)
+
+        rotated_cTw = cTw @ rotate_in_cTw
+        rotated_wTc = np.linalg.pinv(rotated_cTw).T
+        self.forward = rotated_wTc[:,2]
+        self.right = rotated_wTc[:,0]
+        self.up = rotated_wTc[:,1]
+        self.forward[-1] = 1
+        self.right[-1] = 1
+        self.up[-1] = 1
+
+
     def camera_yaw(self, angle):
-        rotate = rotate_y(angle)
-        self.forward = self.forward @ rotate
-        self.right = self.right @ rotate
-        self.up = self.up @ rotate
+        self.rotate_camera(angle, 'y')
 
     def camera_pitch(self, angle):
-        rotate = rotate_x(angle)
-        self.forward = self.forward @ rotate
-        self.right = self.right @ rotate
-        self.up = self.up @ rotate
+        self.rotate_camera(angle, 'x')
 
     def camera_z(self, angle):
-        rotate = rotate_z(angle)
-        self.forward = self.forward @ rotate
-        self.right = self.right @ rotate
-        self.up = self.up @ rotate
+        self.rotate_camera(angle, 'z')
 
     def translate_matrix(self):
         x, y, z, w = self.position
         return np.array([
             [1, 0, 0, 0],
-            [0, 1, 0, 1],
+            [0, 1, 0, 0],
             [0, 0, 1, 0],
             [-x, -y, -z, 1]
         ])
