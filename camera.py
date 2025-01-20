@@ -31,18 +31,18 @@ class Camera:
             self.position -= self.up * self.moving_speed
 
         if key[pg.K_LEFT]:
-            self.camera_yaw(-self.rotation_speed)
-        if key[pg.K_RIGHT]:
             self.camera_yaw(self.rotation_speed)
+        if key[pg.K_RIGHT]:
+            self.camera_yaw(-self.rotation_speed)
         if key[pg.K_UP]:
-            self.camera_pitch(-self.rotation_speed)
-        if key[pg.K_DOWN]:
             self.camera_pitch(self.rotation_speed)
+        if key[pg.K_DOWN]:
+            self.camera_pitch(-self.rotation_speed)
 
         if key[pg.K_PERIOD]:
-            self.camera_z(-self.rotation_speed)
-        if key[pg.K_COMMA]:
             self.camera_z(self.rotation_speed)
+        if key[pg.K_COMMA]:
+            self.camera_z(-self.rotation_speed)
 
     def rotate_camera(self, angle, axis):
         wTc = self.camera_matrix().T
