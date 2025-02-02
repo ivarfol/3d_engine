@@ -50,9 +50,9 @@ class Camera:
 
     def mouse_control(self, pos):
         if pos[0] != 0:
-            self.camera_yaw(-pos[0] / 400)
+            self.rotate_camera(-pos[0] / 400, 'y')
         if pos[1] != 0:
-            self.camera_pitch(-pos[1] / 400)
+            self.rotate_camera(-pos[1] / 400, 'x')
 
     def rotate_camera(self, angle, axis):
         if (axis == 'y'):
