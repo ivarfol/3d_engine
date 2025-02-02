@@ -1,5 +1,6 @@
 import pygame as pg
 from matrix_functions import *
+from math import sqrt
 
 class Camera:
     def __init__(self, render, position):
@@ -46,9 +47,9 @@ class Camera:
 
     def mouse_control(self, pos):
         if pos[0] != 0:
-            self.camera_yaw(round(-pos[0] / 200, 2))
+            self.camera_yaw(-pos[0] / 400)
         if pos[1] != 0:
-            self.camera_pitch(round(-pos[1] / 200, 2))
+            self.camera_pitch(-pos[1] / 400)
 
     def rotate_camera(self, angle, axis):
         wTc = self.camera_matrix().T
