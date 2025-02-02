@@ -44,6 +44,12 @@ class Camera:
         if key[pg.K_COMMA]:
             self.camera_z(-self.rotation_speed)
 
+    def mouse_control(self, pos):
+        if pos[0] != 0:
+            self.camera_yaw(round(-pos[0] / 200, 2))
+        if pos[1] != 0:
+            self.camera_pitch(round(-pos[1] / 200, 2))
+
     def rotate_camera(self, angle, axis):
         wTc = self.camera_matrix().T
         cTw = np.linalg.pinv(wTc)
