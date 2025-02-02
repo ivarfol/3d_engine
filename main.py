@@ -17,8 +17,8 @@ class SoftwareRender:
         self.fullscreen = False
         self.exit_window = False
         pg.mouse.set_visible(False)
-        pg.event.set_grab(True)
         pg.mouse.set_pos = (800, 450)
+        pg.event.set_grab(True)
 
     def create_objects(self):
         self.camera = Camera(self, [0.5, 1, -4])
@@ -50,6 +50,7 @@ class SoftwareRender:
             self.draw()
             if not self.exit_window:
                 pg.mouse.set_pos = (800, 450)
+                pg.event.set_grab(True)
             self.camera.control()
             for event in pg.event.get():
                 if event.type == pg.QUIT:
@@ -68,6 +69,10 @@ class SoftwareRender:
                         self.exit_window = True
                         pg.mouse.set_visible(True)
                         pg.event.set_grab(False)
+                elif event.type == pg.MOUSEBUTTONUP:
+                    self.exit_window = False
+                    pg.mouse.set_visible(False)
+                    pg.event.set_grab(True)
             pg.display.set_caption(f'{self.clock.get_fps():.3f}')
             pg.display.flip()
             self.clock.tick(self.FPS)
